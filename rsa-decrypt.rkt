@@ -1,0 +1,25 @@
+(define (fast-expt b n)
+  (fast-expti 1 b n))
+
+(define (fast-expti a b n)
+  (cond ((= n 0) a)
+        ((even? n) (fast-expti a (square b) (/ n 2)))
+        (else (fast-expti (* a b) b (- n 1)))))
+
+(define (fast-expt-modi a b c n) ; returns (a * (b^c)) (mod n)
+  (cond ((= c 0) a)
+        ((even? c) (fast-expt-modi a (modulo (square b) n) (/ c 2) n))
+        (else (fast-expt-modi (modulo (* a b) n) b (- c 1) n))))
+(define (square n)
+  (* n n))
+
+(define (extended-gcd a b) ; can be used to find modulo inverse
+  (let loop ((s 0) (t 1) (r b)
+             (old-s 1) (old-t 0) (old-r a))
+    (if (zero? r)
+        (cons old-s old-t)
+        (let ((q (quotient old-r r)))
+          (loop (- old-s (* q s))
+                (- old-t (* q t))
+                (- old-r (* q r))
+                s t r)))))
