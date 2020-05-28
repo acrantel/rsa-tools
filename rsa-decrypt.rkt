@@ -14,6 +14,7 @@
   (* n n))
 
 ; do (extended-gcd e tot) -> d is the car of the output (modulo n if negative)
+; you can add tot to d if d is negative to get a positive d
 (define (extended-gcd a b) ; can be used to find modulo inverse
   (let loop ((s 0) (t 1) (r b)
              (old-s 1) (old-t 0) (old-r a))
